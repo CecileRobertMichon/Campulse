@@ -39,9 +39,7 @@ public class EventListFragment extends Fragment {
 
     private void initializeData(){
         events = new ArrayList<>();
-        events.add(new Event("Emma Wilson", "23 years old"));
-        events.add(new Event("Lavery Maiss", "25 years old"));
-        events.add(new Event("Lillie Watts", "35 years old"));
+        // TODO : fetch events from database
     }
 
     private void initializeAdapter(){
