@@ -11,11 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.campulse.campulse.model.Event;
 
 import java.util.List;
 
-import static android.provider.ContactsContract.CommonDataKinds.Website.URL;
-import static com.campulse.campulse.R.id.imageView;
 
 public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.EventViewHolder> {
 

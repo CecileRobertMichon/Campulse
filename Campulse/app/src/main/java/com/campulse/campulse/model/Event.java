@@ -1,6 +1,8 @@
-package com.campulse.campulse;
+package com.campulse.campulse.model;
 
 import android.graphics.Bitmap;
+
+import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,24 +10,42 @@ import java.util.Date;
 /**
  * Created by cecilerobertm on 16-09-11.
  */
-class Event {
+public class Event {
+    @SerializedName("_id")
     private String databaseId;
+    @SerializedName("name")
     private String name;
+    @SerializedName("facebookId")
     private String facebookId;
+    @SerializedName("location")
     private String location;
+    @SerializedName("latitude")
     private double latitude;
+    @SerializedName("longitude")
     private double longitude;
+    @SerializedName("start_time")
     private Date startTime;
+    @SerializedName("end_time")
     private Date endTime;
+    @SerializedName("owner")
     private String owner;
+    @SerializedName("description")
     private String description;
+    @SerializedName("building")
     private String building;
+    @SerializedName("campus")
     private String campus;
+    @SerializedName("image_url")
     private String imageUrl;
+    @SerializedName("fb_attending")
     private int fbAttending;
+    @SerializedName("app_attending")
     private int appAttending;
+    @SerializedName("attributes")
     private ArrayList<String> attributes;
+    @SerializedName("scores")
     private ArrayList<Integer> scores;
+    @SerializedName("ongoing")
     private Boolean ongoing;
 
     public Event(String name, String databaseId, String location, double latitude, double longitude, Date startTime, String description, String owner, String campus) {

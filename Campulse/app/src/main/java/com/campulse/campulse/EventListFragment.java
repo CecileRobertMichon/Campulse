@@ -1,15 +1,26 @@
 package com.campulse.campulse;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.campulse.campulse.api.CampulseApi;
+import com.campulse.campulse.model.Event;
+import com.campulse.campulse.model.EventResponse;
+import com.campulse.campulse.model.Success;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by cecilerobertm on 16-09-11.
@@ -19,6 +30,8 @@ public class EventListFragment extends Fragment {
 
     private List<Event> events;
     private RecyclerView rv;
+    private CampulseApi mCampulseApi;
+    public Context c;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,7 +47,6 @@ public class EventListFragment extends Fragment {
         this.rv.setHasFixedSize(true);
 
         initializeData();
-        initializeAdapter();
     }
 
     private void initializeData(){
@@ -47,6 +59,38 @@ public class EventListFragment extends Fragment {
         this.events.add(e2);
         this.events.add(e3);
         this.events.add(e4);
+
+        MainActivity main = (MainActivity) getActivity();
+        CampulseApi mCampulseApi = main.getCampulseApi();
+        // Change Date String to be the last date of query done by user
+        Call<EventResponse> eventsList = mCampulseApi.loadEvents("2016-09-10T20:00:00-0400");
+        eventsList.enqueue(new Callback<EventResponse>() {
+            @Override
+            public void onResponse(Call<EventResponse> call, Response<EventResponse> response) {
+                events = response.body().getResult();
+                for(Event event: events){
+                    Log.d("Event List Fragment", "Event: " + event.getName());
+                }
+                initializeAdapter();
+            }
+
+            @Override
+            public void onFailure(Call<EventResponse> call, Throwable t) {
+
+            }
+        });
+//        Call<Success> test = mCampulseApi.ping();
+//        test.enqueue(new Callback<Success>() {
+//            @Override
+//            public void onResponse(Call<Success> call, Response<Success> response) {
+//                Log.d("Event List Fragment", response.body().getStatus() + " ");
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Success> call, Throwable t) {
+//
+//            }
+//        });
         // TODO : fetch events from database
     }
 
