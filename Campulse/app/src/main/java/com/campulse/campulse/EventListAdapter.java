@@ -59,7 +59,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
     @Override
     public void onBindViewHolder(EventViewHolder eventViewHolder, int i) {
         eventViewHolder.eventName.setText(events.get(i).getName());
-        eventViewHolder.eventTime.setText(events.get(i).getBuilding());
+        eventViewHolder.eventTime.setText(events.get(i).getCampus());
         Picasso.Builder builder = new Picasso.Builder(this.context);
         builder.listener(new Picasso.Listener()
         {
