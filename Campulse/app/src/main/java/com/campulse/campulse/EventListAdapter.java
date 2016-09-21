@@ -1,5 +1,7 @@
 package com.campulse.campulse;
 
+import android.content.Context;
+import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,23 +10,30 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
+import static android.provider.ContactsContract.CommonDataKinds.Website.URL;
+import static com.campulse.campulse.R.id.imageView;
+
 public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.EventViewHolder> {
+
+    Context context;
 
     public static class EventViewHolder extends RecyclerView.ViewHolder {
 
         CardView cv;
-        TextView personName;
-        TextView personAge;
-        ImageView personPhoto;
+        TextView eventName;
+        TextView eventTime;
+        ImageView eventPhoto;
 
         EventViewHolder(View itemView) {
             super(itemView);
             cv = (CardView) itemView.findViewById(R.id.cv);
-            personName = (TextView) itemView.findViewById(R.id.person_name);
-            personAge = (TextView) itemView.findViewById(R.id.person_age);
-            personPhoto = (ImageView) itemView.findViewById(R.id.person_photo);
+            eventName = (TextView) itemView.findViewById(R.id.event_name);
+            eventTime = (TextView) itemView.findViewById(R.id.event_time);
+            eventPhoto = (ImageView) itemView.findViewById(R.id.event_photo);
         }
     }
 
@@ -43,14 +52,27 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
     public EventViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_event_list, viewGroup, false);
         EventViewHolder evh = new EventViewHolder(v);
+        this.context = viewGroup.getContext();
         return evh;
     }
 
     @Override
-    public void onBindViewHolder(EventViewHolder personViewHolder, int i) {
-        personViewHolder.personName.setText(events.get(i).name);
-        personViewHolder.personAge.setText(events.get(i).age);
-        // personViewHolder.personPhoto.setImageResource(events.get(i).photoId);
+    public void onBindViewHolder(EventViewHolder eventViewHolder, int i) {
+        eventViewHolder.eventName.setText(events.get(i).getName());
+        eventViewHolder.eventTime.setText(events.get(i).getBuilding());
+        Picasso.Builder builder = new Picasso.Builder(this.context);
+        builder.listener(new Picasso.Listener()
+        {
+            @Override
+            public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception)
+            {
+                exception.printStackTrace();
+            }
+        });
+        builder.build().load(events.get(i).getImageUrl())
+                .placeholder(R.drawable.image_placeholder)
+                .error(R.drawable.image_placeholder)
+                .into(eventViewHolder.eventPhoto);
     }
 
     @Override

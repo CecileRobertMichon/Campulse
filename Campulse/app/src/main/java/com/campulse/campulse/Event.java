@@ -28,7 +28,7 @@ class Event {
     private ArrayList<Integer> scores;
     private Boolean ongoing;
 
-    Event(String name, String databaseId, String location, double latitude, double longitude, Date startTime, String description, String owner, String campus) {
+    public Event(String name, String databaseId, String location, double latitude, double longitude, Date startTime, String description, String owner, String campus) {
         this.name = name;
         this.databaseId = databaseId;
         this.location = location;
@@ -38,6 +38,13 @@ class Event {
         this.description = description;
         this.owner = owner;
         this.campus = campus;
+    }
+
+    // for testing UI
+    public Event(String name, String campus, String imageUrl) {
+        this.name = name;
+        this.campus = campus;       // should be replaced by start time
+        this.imageUrl = imageUrl;
     }
 
     public String getImageUrl() {
