@@ -14,16 +14,15 @@ public class EventResponse {
     int status;
     @SerializedName("date")
     Date dateOfquery;
-    @SerializedName("result")
-    ArrayList<Event> result;
+    @SerializedName("data")
+    ArrayList<Event> data;
 
-
-    public ArrayList<Event> getResult() {
-        return result;
+    public ArrayList<Event> getData() {
+        return this.data;
     }
 
-    public void setResult(ArrayList<Event> result) {
-        this.result = result;
+    public void setData(ArrayList<Event> data) {
+        this.data = data;
     }
 
     public int getStatus() {

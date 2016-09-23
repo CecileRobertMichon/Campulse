@@ -6,6 +6,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,19 +18,34 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.campulse.campulse.api.CampulseApi;
+import com.campulse.campulse.model.Event;
+import com.campulse.campulse.model.EventResponse;
+import com.facebook.AccessToken;
+
+import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private CampulseApi mCampulseApi;
+    private EventListFragment mEventListFragment;
+    private FacebookApplication mFacebookApplication;
+    private final String TAG = "Main Activity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mCampulseApi =  CampulseApi.retrofit.create(CampulseApi.class);
+        mEventListFragment = new EventListFragment();
+        mFacebookApplication = new FacebookApplication();
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        // TODO set default fragment as saved list
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +97,36 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onStart(){
+        super.onStart();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        AccessToken token = AccessToken.getCurrentAccessToken();
+        if(token != null){
+            Call<EventResponse> eventsAddedToDB = mCampulseApi.postFacebookEvents(token.toString());
+            eventsAddedToDB.enqueue(new Callback<EventResponse>() {
+                @Override
+                public void onResponse(Call<EventResponse> call, Response<EventResponse> response) {
+                    if(response != null){
+                        ArrayList<Event> newEvents = response.body().getData();
+                        for(Event event : newEvents){
+                            Log.d(TAG, "Event added to DB: " + event.getName());
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<EventResponse> call, Throwable t) {
+
+                }
+            });
+        }
+    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -89,7 +135,7 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = null;
 
         if (id == R.id.nav_events) {
-            fragment = new EventListFragment();
+            fragment = mEventListFragment;
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
