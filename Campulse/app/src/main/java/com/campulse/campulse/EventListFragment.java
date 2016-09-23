@@ -61,15 +61,18 @@ public class EventListFragment extends Fragment {
         eventsList.enqueue(new Callback<EventResponse>() {
             @Override
             public void onResponse(Call<EventResponse> call, Response<EventResponse> response) {
-                events = response.body().getData();
-                if (events.size() > 0) {
-                    // TODO Remove printing statement
-                    for (Event event : events) {
-                        Log.d(TAG, "Event: " + event.getName());
+                EventResponse mEventResponse = response.body();
+                if (mEventResponse != null) {
+                    events = mEventResponse.getData();
+                    if (events.size() > 0) {
+                        // TODO Remove printing statement
+                        for (Event event : events) {
+                            Log.d(TAG, "Event: " + event.getName());
+                        }
+                        initializeAdapter();
+                    } else {
+                        // TODO add empty response handler
                     }
-                    initializeAdapter();
-                } else {
-                    // TODO add empty response handler
                 }
             }
 

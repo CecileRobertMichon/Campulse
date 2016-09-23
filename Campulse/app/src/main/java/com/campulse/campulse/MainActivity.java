@@ -1,5 +1,6 @@
 package com.campulse.campulse;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,11 +17,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.campulse.campulse.api.CampulseApi;
 import com.campulse.campulse.model.Event;
 import com.campulse.campulse.model.EventResponse;
 import com.facebook.AccessToken;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -35,14 +39,15 @@ public class MainActivity extends AppCompatActivity
     private EventListFragment mEventListFragment;
     private FacebookApplication mFacebookApplication;
     private final String TAG = "Main Activity";
+    private Fragment fragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         mCampulseApi =  CampulseApi.retrofit.create(CampulseApi.class);
         mEventListFragment = new EventListFragment();
         mFacebookApplication = new FacebookApplication();
 
-        setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // TODO set default fragment as saved list
@@ -62,7 +67,29 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
+        ImageView profileImage = (ImageView) headerView.findViewById(R.id.nav_header_main_imageView);
+        TextView name = (TextView) headerView.findViewById(R.id.nav_header_main_name);
+        name.setText("Eduardo Coronado");
+        TextView major = (TextView) headerView.findViewById(R.id.nav_header_main_studying);
+        major.setText("Software Engineering");
         navigationView.setNavigationItemSelectedListener(this);
+
+        Picasso.Builder builder = new Picasso.Builder(this);
+        builder.listener(new Picasso.Listener() {
+            @Override
+            public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
+                exception.printStackTrace();
+            }
+        });
+        builder.build().load("https://scontent.xx.fbcdn.net/v/t1.0-1/p86x86/13532940_10153548858582187_8447062067806751471_n.jpg?oh=9cef8712f16ca264bedbfb10c5861b3c&oe=5864DB15")
+                .placeholder(R.drawable.image_placeholder)
+                .error(R.drawable.image_placeholder)
+                .into(profileImage);
+
+
+        fragment = mEventListFragment;
+        changeFragment(fragment);
     }
 
     @Override
@@ -112,9 +139,12 @@ public class MainActivity extends AppCompatActivity
                 @Override
                 public void onResponse(Call<EventResponse> call, Response<EventResponse> response) {
                     if(response != null){
-                        ArrayList<Event> newEvents = response.body().getData();
-                        for(Event event : newEvents){
-                            Log.d(TAG, "Event added to DB: " + event.getName());
+                        EventResponse mEventResponse = response.body();
+                        if(mEventResponse != null) {
+                            ArrayList<Event> newEvents = mEventResponse.getData();
+                            for (Event event : newEvents) {
+                                Log.d(TAG, "Event added to DB: " + event.getName());
+                            }
                         }
                     }
                 }
@@ -132,10 +162,12 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        Fragment fragment = null;
 
+        // TODO switch to case
         if (id == R.id.nav_events) {
-            fragment = mEventListFragment;
+            // TODO close drawer if true
+            if(this.fragment.equals(mEventListFragment)) return true;
+            this.fragment = mEventListFragment;
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
@@ -147,18 +179,22 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_send) {
 
         }
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        if (fragment != null) {
-            fragmentTransaction.add(R.id.content_frame, fragment);
-            fragmentTransaction.commit();
-        }
+        changeFragment(this.fragment);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
+    private void changeFragment(Fragment navigationFragment){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        if (fragment != null) {
+            fragmentTransaction.add(R.id.content_frame, fragment);
+            fragmentTransaction.commit();
+        }
+    }
+
     public CampulseApi getCampulseApi(){ return mCampulseApi; }
+
 }
