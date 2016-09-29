@@ -13,7 +13,10 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.campulse.campulse.model.Event;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.StringTokenizer;
 
 
 public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.EventViewHolder> {
@@ -25,6 +28,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
         CardView cv;
         TextView eventName;
         TextView eventTime;
+        TextView eventLocation;
         ImageView eventPhoto;
 
         EventViewHolder(View itemView) {
@@ -32,6 +36,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
             cv = (CardView) itemView.findViewById(R.id.cv);
             eventName = (TextView) itemView.findViewById(R.id.event_name);
             eventTime = (TextView) itemView.findViewById(R.id.event_time);
+            eventLocation = (TextView) itemView.findViewById(R.id.event_location);
             eventPhoto = (ImageView) itemView.findViewById(R.id.event_photo);
         }
     }
@@ -57,8 +62,12 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
 
     @Override
     public void onBindViewHolder(EventViewHolder eventViewHolder, int i) {
+        // TODO : handle null name, time and location
         eventViewHolder.eventName.setText(events.get(i).getName());
-        eventViewHolder.eventTime.setText(events.get(i).getCampus());
+
+        Date time = events.get(i).getStartTime();
+        eventViewHolder.eventTime.setText(getFormattedTime(time));
+        eventViewHolder.eventLocation.setText(events.get(i).getLocation());
         Picasso.Builder builder = new Picasso.Builder(this.context);
         builder.listener(new Picasso.Listener()
         {
@@ -77,5 +86,15 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
     @Override
     public int getItemCount() {
         return events.size();
+    }
+
+    private String getFormattedTime(Date time) {
+        try {
+            SimpleDateFormat outgoingFormat = new SimpleDateFormat("hh:mm a", java.util.Locale.getDefault());
+            return outgoingFormat.format(time);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "All Day"; //TODO : move to string values
+        }
     }
 }
