@@ -17,4 +17,5 @@
     <dimen name="use_gravity">0dp</dimen>
     <dimen name="small_spacing">2dp</dimen>
     <dimen name="medium_spacing">8dp</dimen>
+    <dimen name="large_spacing">12dp</dimen>
 </resources>
