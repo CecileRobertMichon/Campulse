@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.campulse.campulse.api.CampulseApi;
+import com.campulse.campulse.eventList.EventListFragment;
 import com.campulse.campulse.model.Event;
 import com.campulse.campulse.model.EventResponse;
 import com.facebook.AccessToken;
