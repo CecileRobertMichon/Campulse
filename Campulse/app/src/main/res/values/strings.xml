@@ -8,5 +8,15 @@
     <string name="facebook_app_id">666877453487265</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="extra_event_key">EXTRA_EVENT</string>
+    <string name="login_prompt">Or Log In with an Email Address</string>
+    <string name="username_hint">username</string>
+    <string name="login_button_label">LOG IN</string>
+    <string name="password_hint">password</string>
+    <string name="new_account_prompt">SIGN UP</string>
+    <string name="forgot_password_prompt">Forgot Password?</string>
+    <string name="email_sent_message">An email was sent to your email with instructions to reset your password</string>
+    <string name="enter_email_title">Enter email address</string>
+    <string name="enter_email_message">Please enter your email address</string>
+    <string name="welcome_prompt">Hey there! Log in to start</string>
 
 </resources>

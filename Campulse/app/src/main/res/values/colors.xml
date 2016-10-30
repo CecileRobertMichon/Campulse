@@ -7,4 +7,34 @@
     <color name="colorThirdAccent">#E76F51</color>
     <color name="transparentWhite">#70FFFFFF</color>
     <color name="darkGrey">#999999</color>
+
+    <color name="blue_bright">#00ddff</color>
+    <color name="background_color">#0044AA</color>
+    <color name="dark_grey">#2f3848</color>
+    <color name="light_grey">#666565</color>
+    <color name="bright_turquoise">#00DEA1</color>
+    <color name="highlight_color">#A4FFDA</color>
+    <color name="apptheme_color_dark">#339999</color>
+    <color name="title_color">#0099CC</color>
+    <color name="hint_grey">#bbbbbb</color>
+    <color name="white">#fff</color>
+    <color name="join_green">#99FF00</color>
+    <color name="mcgill_red">#CA000F</color>
+    <color name="apptheme_color">#f05768</color>
+    <color name="orange">#FF2C00</color>
+    <color name="purple">#582A72</color>
+    <color name="bright_pink">#CA000F</color>
+    <color name="tab_unselected">#888888</color>
+    <color name="yellow">#FFEB3B</color>
+
+
+    <!-- Material theme -->
+    <color name="primary">#f05768</color>
+    <color name="primary_dark">#2f3848</color>
+    <color name="primary_light">#C5CAE9</color>
+    <color name="accent">#00DEA1</color>
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#727272</color>
+    <color name="icons">#FFFFFF</color>
+    <color name="divider">#B6B6B6</color>
 </resources>

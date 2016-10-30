@@ -1,34 +1,123 @@
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".eventList.EventListFragment$LoginActivity">
+    android:background="@color/dark_grey">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:src="@drawable/mcgill_photo"
+        android:scaleType="centerCrop"/>
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    </android.support.design.widget.AppBarLayout>
-
-    <include layout="@layout/content_login" />
-
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/facebook_login_button"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:id="@+id/welcome_prompt"
+        android:text="@string/welcome_prompt"
+        android:textColor="@android:color/white"
+        android:paddingRight="30dp"
+        android:paddingLeft="30dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:textSize="26sp"
         android:layout_marginTop="30dp"
-        android:layout_marginBottom="30dp" />
+        android:gravity="center_horizontal"
+        android:layout_centerHorizontal="true"/>
 
-</android.support.design.widget.CoordinatorLayout>
+    <FrameLayout
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:id="@+id/fb_button"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/welcome_prompt"
+        android:layout_marginTop="50dp">
+
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/facebook_login_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/login_prompt"
+        android:text="@string/login_prompt"
+        android:textColor="@android:color/white"
+        android:paddingRight="30dp"
+        android:paddingLeft="30dp"
+        android:paddingTop="10dp"
+        android:textSize="20sp"
+        android:layout_below="@id/fb_button"
+        android:layout_marginTop="40dp"
+        android:gravity="center_horizontal"
+        android:layout_centerHorizontal="true"/>
+
+    <LinearLayout
+        style="@style/LoginBoxLayout"
+        android:id="@+id/login"
+        android:layout_below="@id/login_prompt"
+        android:gravity="center_horizontal">
+
+        <EditText
+            style="@style/LoginEditText"
+            android:id="@+id/login_username"
+            android:hint="@string/username_hint">
+        </EditText>
+
+        <EditText
+            style="@style/LoginEditText"
+            android:hint="@string/password_hint"
+            android:id="@+id/login_password"
+            android:inputType="textPassword"
+            android:layout_marginBottom="12dp"/>
+    </LinearLayout>
+
+    <Button
+        style="@style/LoginButton"
+        android:text="@string/new_account_prompt"
+        android:onClick="buttonClick"
+        android:id="@+id/signup_button"
+        android:background="@drawable/round_corners_button"
+        android:layout_marginBottom="40dp"
+        android:layout_below="@id/login"
+        android:layout_alignLeft="@+id/login"
+        android:layout_alignStart="@+id/login" />
+
+
+    <Button
+        style="@style/LoginButton"
+        android:onClick="buttonClick"
+        android:text="@string/login_button_label"
+        android:id="@+id/login_button"
+        android:background="@drawable/round_corners_button"
+        android:layout_alignTop="@+id/signup_button"
+        android:layout_alignEnd="@id/login"
+        android:layout_alignRight="@id/login" />
+
+
+    <ImageView
+        android:layout_width="1dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="4dp"
+        android:background="@color/white"
+        android:layout_below="@+id/login"
+        android:layout_alignRight="@id/signup_button"
+        />
+
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/forgot_password_prompt"
+        android:onClick="buttonClick"
+        android:id="@+id/forgot_password_button"
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="25dp"
+        android:textSize="15sp"
+        android:background="@android:color/transparent"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>
