@@ -125,7 +125,7 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             return outgoingFormat.format(time);
         } catch (Exception e) {
             e.printStackTrace();
-            return "All Day"; //TODO : move to string values
+            return context.getString(R.string.all_day);
         }
     }
 

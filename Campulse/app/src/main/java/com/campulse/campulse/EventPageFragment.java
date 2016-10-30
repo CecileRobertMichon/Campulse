@@ -1,6 +1,7 @@
 package com.campulse.campulse;
 
 import android.app.Activity;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,8 +13,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.campulse.campulse.model.Event;
+import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
+import java.io.StringReader;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class EventPageFragment extends Fragment {
     ImageButton goBack;
@@ -63,7 +71,6 @@ public class EventPageFragment extends Fragment {
 
     public void identifyAndListen(View root) {
         updateUI(root);
-        goBack = (ImageButton) root.findViewById(R.id.go_back);
         hide = (ImageButton) root.findViewById(R.id.hide);
         show = (ImageButton) root.findViewById(R.id.show);
 
@@ -99,13 +106,6 @@ public class EventPageFragment extends Fragment {
                 }
             }
         });
-
-        goBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                closeFragment();
-            }
-        });
     }
 
     private void closeFragment() {
@@ -121,15 +121,32 @@ public class EventPageFragment extends Fragment {
 
     public void updateUI(View root) {
         imageLayout = (ImageView) root.findViewById(R.id.eventPage_photo);
-        // TODO : set image
+        Picasso.Builder builder = new Picasso.Builder(this.getActivity());
+        builder.listener(new Picasso.Listener()
+        {
+            @Override
+            public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception)
+            {
+                exception.printStackTrace();
+            }
+        });
+        builder.build().load(event.getImageUrl())
+                .placeholder(R.drawable.image_placeholder)
+                .error(R.drawable.image_placeholder)
+                .into(imageLayout);
         titleLayout = (TextView) root.findViewById(R.id.eventPage_eventTitle);
         titleLayout.setText(event.getName());
         locationLayout = (TextView) root.findViewById(R.id.eventPage_location);
-        locationLayout.setText(event.getBuilding());
+        locationLayout.setText(event.getLocation());
         timeLayout = (TextView) root.findViewById(R.id.eventPage_start_time);
-        timeLayout.setText(event.getStartTime().toString());
-
+        timeLayout.setText(formatTime(event.getStartTime()));
         descriptionText = (TextView) root.findViewById(R.id.eventPage_descriptionField);
         descriptionText.setText(event.getDescription());
+    }
+
+    private String formatTime(Date date) {
+        SimpleDateFormat fmtOut = new SimpleDateFormat("E M dd hh:mm a");
+        return fmtOut.format(date);
+
     }
 }

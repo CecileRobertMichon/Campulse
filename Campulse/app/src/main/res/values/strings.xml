@@ -18,5 +18,6 @@
     <string name="enter_email_title">Enter email address</string>
     <string name="enter_email_message">Please enter your email address</string>
     <string name="welcome_prompt">Hey there! Log in to start</string>
+    <string name="all_day">All Day</string>
 
 </resources>
