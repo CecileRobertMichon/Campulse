@@ -42,17 +42,6 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/image_placeholder"/>
 
-            <ImageButton
-                android:id="@+id/go_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
-                android:layout_marginTop="20dp"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_arrow_back"
-                android:visibility="visible" />
-
             <TextView
                 android:id="@+id/eventPage_eventTitle"
                 android:layout_width="match_parent"
@@ -62,11 +51,9 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="20dp"
-                android:background="@android:color/white"
                 android:gravity="center"
-                android:text="Hello"
-                android:textColor="#000000"
-                android:textSize="24sp" />
+                android:textColor="@color/colorSecondAccent"
+                android:textSize="18sp" />
 
 
             <ImageView
@@ -156,19 +143,6 @@
                 android:clickable="true"
                 android:src="@drawable/ic_expand_less"
                 android:visibility="invisible" />
-
-            <Button
-                android:id="@+id/joinBut"
-                android:layout_below="@id/show"
-                android:layout_gravity="center"
-                android:layout_marginBottom="12dp"
-                android:onClick="buttonClick"
-                android:paddingLeft="50dp"
-                android:paddingRight="50dp"
-                android:text="Join"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
         </RelativeLayout>
     </ScrollView>
 

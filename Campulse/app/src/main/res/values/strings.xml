@@ -8,5 +8,6 @@
     <string name="facebook_app_id">666877453487265</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="extra_event_key">EXTRA_EVENT</string>
+    <string name="all_day">All Day</string>
 
 </resources>
