@@ -4,13 +4,14 @@ import android.graphics.Bitmap;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
 /**
  * Created by cecilerobertm on 16-09-11.
  */
-public class Event {
+public class Event implements Serializable{
     @SerializedName("_id")
     private String databaseId;
     @SerializedName("name")

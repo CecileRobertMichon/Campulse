@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.campulse.campulse.EventPageFragment;
 import com.campulse.campulse.MainActivity;
 import com.campulse.campulse.R;
 import com.campulse.campulse.api.CampulseApi;
@@ -16,6 +17,7 @@ import com.campulse.campulse.eventList.EventListAdapter;
 import com.campulse.campulse.model.Event;
 import com.campulse.campulse.model.EventResponse;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -38,7 +40,6 @@ public class EventListFragment extends Fragment {
     private List<Event> events;
     private List<ListItem> items;
     private RecyclerView rv;
-    private CampulseApi mCampulseApi;  // TODO : Eduardo this isn't used??
     public final String TAG = "Event List Fragment";
 
     @Override
@@ -53,6 +54,24 @@ public class EventListFragment extends Fragment {
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         this.rv.setLayoutManager(llm);
         this.rv.setHasFixedSize(true);
+        this.rv.addOnItemTouchListener(
+                new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        ListItem itemClicked = items.get(position);
+                        if (itemClicked.getType() == 1) {   // only do something if item is an event
+                            EventItem eventItem = (EventItem) itemClicked;
+                            Event event = eventItem.getEvent();
+                            Log.e(TAG,""+ event.getName());
+                            getActivity().getSupportFragmentManager()
+                                    .beginTransaction()
+                                    .add(R.id.drawer_layout, EventPageFragment.newInstance(event)
+                                    )
+                                    .commit();
+                        }
+                    }
+                })
+        );
 
         initializeData();
     }

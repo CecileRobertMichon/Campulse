@@ -52,14 +52,6 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // TODO set default fragment as saved list
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -71,7 +63,7 @@ public class MainActivity extends AppCompatActivity
         View headerView = navigationView.getHeaderView(0);
         ImageView profileImage = (ImageView) headerView.findViewById(R.id.nav_header_main_imageView);
         TextView name = (TextView) headerView.findViewById(R.id.nav_header_main_name);
-        name.setText("Eduardo Coronado");
+        name.setText("Eduardo Coronado"); // TODO : Yah ok
         TextView major = (TextView) headerView.findViewById(R.id.nav_header_main_studying);
         major.setText("Software Engineering");
         navigationView.setNavigationItemSelectedListener(this);

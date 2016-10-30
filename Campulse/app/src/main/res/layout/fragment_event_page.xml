@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/scrollField"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:scrollbarStyle="insideOverlay"
+        android:scrollbars="vertical">
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            android:orientation="vertical">
+            
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="155dp"
+                android:id="@+id/eventPage_photo"
+                android:scaleType="centerCrop"
+                android:src="@drawable/image_placeholder"/>
+
+            <ImageButton
+                android:id="@+id/go_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="20dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_arrow_back"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/eventPage_eventTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/eventPage_photo"
+                android:layout_marginBottom="25dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="20dp"
+                android:background="@android:color/white"
+                android:gravity="center"
+                android:text="Hello"
+                android:textColor="#000000"
+                android:textSize="24sp" />
+
+
+            <ImageView
+                android:id="@+id/eventPage_time_image"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_below="@id/eventPage_eventTitle"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/ic_time" />
+
+
+            <TextView
+                android:id="@+id/eventPage_start_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:text="Time"
+                android:layout_alignBottom="@id/eventPage_time_image"
+                android:layout_marginLeft="65dp"
+                android:layout_marginRight="12dp"
+                android:textColor="#000000"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+
+            <ImageView
+                android:id="@+id/eventPage_location_image"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_below="@+id/eventPage_time_image"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="30dp"
+                android:src="@drawable/ic_place" />
+
+            <TextView
+                android:id="@+id/eventPage_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/eventPage_start_time"
+                android:layout_alignBottom="@id/eventPage_location_image"
+                android:maxLines="2"
+                android:layout_marginRight="18dp"
+                android:text="Address"
+                android:textColor="#000000"
+                android:textSize="15sp" />
+
+
+            <TextView
+                android:id="@+id/eventPage_descriptionField"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/eventPage_location_image"
+                android:layout_below="@id/eventPage_location_image"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="15dp"
+                android:ellipsize="end"
+                android:padding="3dp"
+                android:text="Description"
+                android:textColor="@color/background_floating_material_dark"
+                android:textSize="14sp" />
+
+            <ImageButton
+                android:id="@+id/show"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/eventPage_descriptionField"
+                android:layout_gravity="right"
+                android:layout_marginRight="16dp"
+                android:background="@android:color/transparent"
+                android:clickable="true"
+                android:visibility="visible"
+                android:src="@drawable/ic_expand_more" />
+
+            <ImageButton
+                android:id="@+id/hide"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/eventPage_descriptionField"
+                android:layout_gravity="right"
+                android:layout_marginRight="16dp"
+                android:background="@android:color/transparent"
+                android:clickable="true"
+                android:src="@drawable/ic_expand_less"
+                android:visibility="invisible" />
+
+            <Button
+                android:id="@+id/joinBut"
+                android:layout_below="@id/show"
+                android:layout_gravity="center"
+                android:layout_marginBottom="12dp"
+                android:onClick="buttonClick"
+                android:paddingLeft="50dp"
+                android:paddingRight="50dp"
+                android:text="Join"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+    </ScrollView>
+
+
+</LinearLayout>

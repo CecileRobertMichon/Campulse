@@ -33,8 +33,9 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         TextView eventLocation;
         ImageView eventPhoto;
 
-        EventViewHolder(View itemView) {
+        public EventViewHolder(final View itemView) {
             super(itemView);
+            final Context context = itemView.getContext();
             cv = (CardView) itemView.findViewById(R.id.cv);
             eventName = (TextView) itemView.findViewById(R.id.event_name);
             eventTime = (TextView) itemView.findViewById(R.id.event_time);
@@ -87,7 +88,6 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         if (type == ListItem.TYPE_HEADER) {
             HeaderItem header = (HeaderItem) this.items.get(position);
             HeaderViewHolder headerViewHolder = (HeaderViewHolder) viewHolder;
-            // TODO : set date
             headerViewHolder.date.setText(getFormattedDate(header.getDate()));
         } else {
             Event event = ((EventItem) this.items.get(position)).getEvent();
@@ -97,6 +97,7 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             Date time = event.getStartTime();
             eventViewHolder.eventTime.setText(getFormattedTime(time));
             eventViewHolder.eventLocation.setText(event.getLocation());
+            // TODO : only load event once
             Picasso.Builder builder = new Picasso.Builder(this.context);
             builder.listener(new Picasso.Listener()
             {
