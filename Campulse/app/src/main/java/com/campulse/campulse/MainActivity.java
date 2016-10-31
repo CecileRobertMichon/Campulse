@@ -122,7 +122,8 @@ public class MainActivity extends AppCompatActivity
         super.onResume();
         AccessToken token = AccessToken.getCurrentAccessToken();
         if(token != null){
-            Call<EventResponse> eventsAddedToDB = mCampulseApi.postFacebookEvents(token.toString());
+            Log.d("Chiquelo", token.getToken());
+            Call<EventResponse> eventsAddedToDB = mCampulseApi.postFacebookEvents(token.getToken());
             eventsAddedToDB.enqueue(new Callback<EventResponse>() {
                 @Override
                 public void onResponse(Call<EventResponse> call, Response<EventResponse> response) {
