@@ -1,6 +1,7 @@
 package com.campulse.campulse;
 
 import android.app.Activity;
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.campulse.campulse.model.Event;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
@@ -32,6 +35,7 @@ public class EventPageFragment extends Fragment {
     TextView descriptionText;
     ImageButton show, hide;
     Event event;
+    private Context context;
     Activity activity = getActivity();
 
     public static final EventPageFragment newInstance(Serializable event)
@@ -47,6 +51,7 @@ public class EventPageFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        this.context = this.getActivity();
         event = (Event) getArguments().getSerializable(getActivity().getResources().getString(R.string.extra_event_key));
     }
 
@@ -121,19 +126,26 @@ public class EventPageFragment extends Fragment {
 
     public void updateUI(View root) {
         imageLayout = (ImageView) root.findViewById(R.id.eventPage_photo);
-        Picasso.Builder builder = new Picasso.Builder(this.getActivity());
-        builder.listener(new Picasso.Listener()
-        {
-            @Override
-            public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception)
-            {
-                exception.printStackTrace();
-            }
-        });
-        builder.build().load(event.getImageUrl())
+        Picasso.with(context)
+                .load(event.getImageUrl())
                 .placeholder(R.drawable.image_placeholder)
                 .error(R.drawable.image_placeholder)
-                .into(imageLayout);
+                .networkPolicy(NetworkPolicy.OFFLINE)
+                .into(imageLayout, new Callback() {
+                    @Override
+                    public void onSuccess() {
+
+                    }
+
+                    @Override
+                    public void onError() {
+                        Picasso.with(context)
+                            .load(event.getImageUrl())
+                            .placeholder(R.drawable.image_placeholder)
+                            .error(R.drawable.image_placeholder)
+                            .into(imageLayout);
+                    }
+                });
         titleLayout = (TextView) root.findViewById(R.id.eventPage_eventTitle);
         titleLayout.setText(event.getName());
         locationLayout = (TextView) root.findViewById(R.id.eventPage_location);

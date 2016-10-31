@@ -14,6 +14,7 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
@@ -76,6 +77,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void setupFacebookLogin(){
         FacebookSdk.sdkInitialize(getApplicationContext());
+        LoginManager.getInstance().logOut();
         mCallbackManager = CallbackManager.Factory.create();
         LoginButton loginButton = (LoginButton) findViewById(R.id.facebook_login_button);
         loginButton.setReadPermissions(readPermissions);

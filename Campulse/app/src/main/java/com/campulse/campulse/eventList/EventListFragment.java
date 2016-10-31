@@ -36,7 +36,6 @@ import retrofit2.Response;
  */
 public class EventListFragment extends Fragment {
 
-
     private List<Event> events;
     private List<ListItem> items;
     private RecyclerView rv;
@@ -55,22 +54,21 @@ public class EventListFragment extends Fragment {
         this.rv.setLayoutManager(llm);
         this.rv.setHasFixedSize(true);
         this.rv.addOnItemTouchListener(
-                new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                        ListItem itemClicked = items.get(position);
-                        if (itemClicked.getType() == 1) {   // only do something if item is an event
-                            EventItem eventItem = (EventItem) itemClicked;
-                            Event event = eventItem.getEvent();
-                            Log.e(TAG,""+ event.getName());
-                            getActivity().getSupportFragmentManager()
-                                    .beginTransaction()
-                                    .add(R.id.drawer_layout, EventPageFragment.newInstance(event)
-                                    )
-                                    .commit();
-                        }
+            new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    ListItem itemClicked = items.get(position);
+                    if (itemClicked.getType() == 1) {   // only do something if item is an event
+                        EventItem eventItem = (EventItem) itemClicked;
+                        Event event = eventItem.getEvent();
+                        Log.e(TAG,""+ event.getName());
+                        getActivity().getSupportFragmentManager()
+                            .beginTransaction()
+                            .add(R.id.drawer_layout, EventPageFragment.newInstance(event))
+                            .commit();
                     }
-                })
+                }
+            })
         );
 
         initializeData();
@@ -84,6 +82,7 @@ public class EventListFragment extends Fragment {
         // TODO Change Date String to be the last date of query done by user
         Call<EventResponse> eventsList = mCampulseApi.loadEvents("2016-09-10T20:00:00-0400");
         eventsList.enqueue(new Callback<EventResponse>() {
+
             @Override
             public void onResponse(Call<EventResponse> call, Response<EventResponse> response) {
                 EventResponse mEventResponse = response.body();

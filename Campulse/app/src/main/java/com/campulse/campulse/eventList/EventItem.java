@@ -1,5 +1,4 @@
 package com.campulse.campulse.eventList;
-
 import com.campulse.campulse.model.Event;
 
 /**

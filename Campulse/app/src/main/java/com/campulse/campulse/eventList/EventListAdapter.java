@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +12,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.campulse.campulse.R;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.campulse.campulse.model.Event;
+import com.squareup.picasso.StatsSnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -90,27 +94,38 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             HeaderViewHolder headerViewHolder = (HeaderViewHolder) viewHolder;
             headerViewHolder.date.setText(getFormattedDate(header.getDate()));
         } else {
-            Event event = ((EventItem) this.items.get(position)).getEvent();
-            EventViewHolder eventViewHolder = (EventViewHolder) viewHolder;
+            final Event event = ((EventItem) this.items.get(position)).getEvent();
+            final EventViewHolder eventViewHolder = (EventViewHolder) viewHolder;
+            ImageView image = eventViewHolder.eventPhoto;
+            Log.d("EventListAdapter", "" + image.getWidth());
+
             // TODO : handle null name, time and location
+
             eventViewHolder.eventName.setText(event.getName());
             Date time = event.getStartTime();
             eventViewHolder.eventTime.setText(getFormattedTime(time));
             eventViewHolder.eventLocation.setText(event.getLocation());
-            // TODO : only load event once
-            Picasso.Builder builder = new Picasso.Builder(this.context);
-            builder.listener(new Picasso.Listener()
-            {
-                @Override
-                public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception)
-                {
-                    exception.printStackTrace();
-                }
-            });
-            builder.build().load(event.getImageUrl())
+
+            Picasso.with(this.context)
+                    .load(event.getImageUrl())
                     .placeholder(R.drawable.image_placeholder)
                     .error(R.drawable.image_placeholder)
-                    .into(eventViewHolder.eventPhoto);
+                    .networkPolicy(NetworkPolicy.OFFLINE)
+                    .into(eventViewHolder.eventPhoto, new Callback() {
+                        @Override
+                        public void onSuccess() {
+
+                        }
+
+                        @Override
+                        public void onError() {
+                            Picasso.with(context)
+                                .load(event.getImageUrl())
+                                .placeholder(R.drawable.image_placeholder)
+                                .error(R.drawable.image_placeholder)
+                                .into(eventViewHolder.eventPhoto);
+                        }
+                    });
         }
     }
 

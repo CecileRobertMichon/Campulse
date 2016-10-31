@@ -2,8 +2,6 @@ package com.campulse.campulse;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -25,6 +23,7 @@ import com.campulse.campulse.eventList.EventListFragment;
 import com.campulse.campulse.model.Event;
 import com.campulse.campulse.model.EventResponse;
 import com.facebook.AccessToken;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -38,7 +37,7 @@ public class MainActivity extends AppCompatActivity
 
     private CampulseApi mCampulseApi;
     private EventListFragment mEventListFragment;
-    private FacebookApplication mFacebookApplication;
+    private LibraryApplication mLibraryApplication;
     private final String TAG = "Main Activity";
     private Fragment fragment;
     @Override
@@ -47,7 +46,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         mCampulseApi =  CampulseApi.retrofit.create(CampulseApi.class);
         mEventListFragment = new EventListFragment();
-        mFacebookApplication = new FacebookApplication();
+        mLibraryApplication = new LibraryApplication();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -64,20 +63,16 @@ public class MainActivity extends AppCompatActivity
         ImageView profileImage = (ImageView) headerView.findViewById(R.id.nav_header_main_imageView);
         TextView name = (TextView) headerView.findViewById(R.id.nav_header_main_name);
         name.setText("Eduardo Coronado"); // TODO : Yah ok
+        // TODO : regulate Cecile
         TextView major = (TextView) headerView.findViewById(R.id.nav_header_main_studying);
         major.setText("Software Engineering");
         navigationView.setNavigationItemSelectedListener(this);
 
-        Picasso.Builder builder = new Picasso.Builder(this);
-        builder.listener(new Picasso.Listener() {
-            @Override
-            public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
-                exception.printStackTrace();
-            }
-        });
-        builder.build().load("https://scontent.xx.fbcdn.net/v/t1.0-1/p86x86/13532940_10153548858582187_8447062067806751471_n.jpg?oh=9cef8712f16ca264bedbfb10c5861b3c&oe=5864DB15")
+        Picasso.with(this)
+                .load("https://scontent.xx.fbcdn.net/v/t1.0-1/p86x86/13532940_10153548858582187_8447062067806751471_n.jpg?oh=9cef8712f16ca264bedbfb10c5861b3c&oe=5864DB15")
                 .placeholder(R.drawable.image_placeholder)
                 .error(R.drawable.image_placeholder)
+                .networkPolicy(NetworkPolicy.OFFLINE)
                 .into(profileImage);
 
 
