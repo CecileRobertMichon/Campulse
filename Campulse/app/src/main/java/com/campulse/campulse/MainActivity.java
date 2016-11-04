@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity
                 public void onResponse(Call<EventResponse> call, Response<EventResponse> response) {
                     if(response != null){
                         EventResponse mEventResponse = response.body();
-                        if(mEventResponse != null) {
+                        if(mEventResponse != null && mEventResponse.getData() != null) {
                             ArrayList<Event> newEvents = mEventResponse.getData();
                             for (Event event : newEvents) {
                                 Log.d(TAG, "Event added to DB: " + event.getName());
