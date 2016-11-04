@@ -34,13 +34,13 @@
             android:layout_height="match_parent"
             android:background="@android:color/white"
             android:orientation="vertical">
-            
+
             <ImageView
+                android:id="@+id/eventPage_photo"
                 android:layout_width="match_parent"
                 android:layout_height="155dp"
-                android:id="@+id/eventPage_photo"
                 android:scaleType="centerCrop"
-                android:src="@drawable/image_placeholder"/>
+                android:src="@drawable/image_placeholder" />
 
             <TextView
                 android:id="@+id/eventPage_eventTitle"
@@ -70,35 +70,27 @@
                 android:id="@+id/eventPage_start_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLines="2"
-                android:text="Time"
                 android:layout_alignBottom="@id/eventPage_time_image"
                 android:layout_marginLeft="65dp"
                 android:layout_marginRight="12dp"
-                android:textColor="#000000"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+                android:gravity="center_vertical"
+                android:maxLines="2"
+                android:textColor="@android:color/black"
+                android:text="Time"
+                android:textSize="15sp" />
 
-
-            <ImageView
-                android:id="@+id/eventPage_location_image"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_below="@+id/eventPage_time_image"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="30dp"
-                android:src="@drawable/ic_place" />
 
             <TextView
                 android:id="@+id/eventPage_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/eventPage_start_time"
                 android:layout_alignBottom="@id/eventPage_location_image"
+                android:layout_alignLeft="@+id/eventPage_start_time"
+                android:layout_marginRight="12dp"
+                android:gravity="center_vertical"
                 android:maxLines="2"
-                android:layout_marginRight="18dp"
+                android:textColor="@android:color/black"
                 android:text="Address"
-                android:textColor="#000000"
                 android:textSize="15sp" />
 
 
@@ -108,14 +100,13 @@
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@id/eventPage_location_image"
                 android:layout_below="@id/eventPage_location_image"
+                android:layout_marginBottom="15dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="40dp"
-                android:layout_marginBottom="15dp"
                 android:ellipsize="end"
                 android:padding="3dp"
                 android:text="Description"
-                android:textColor="@color/background_floating_material_dark"
                 android:textSize="14sp" />
 
             <ImageButton
@@ -128,8 +119,8 @@
                 android:layout_marginRight="16dp"
                 android:background="@android:color/transparent"
                 android:clickable="true"
-                android:visibility="visible"
-                android:src="@drawable/ic_expand_more" />
+                android:src="@drawable/ic_expand_more"
+                android:visibility="visible" />
 
             <ImageButton
                 android:id="@+id/hide"
@@ -138,11 +129,22 @@
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/eventPage_descriptionField"
                 android:layout_gravity="right"
+                android:layout_marginBottom="32dp"
                 android:layout_marginRight="16dp"
                 android:background="@android:color/transparent"
                 android:clickable="true"
                 android:src="@drawable/ic_expand_less"
                 android:visibility="invisible" />
+
+            <ImageView
+                android:id="@+id/eventPage_location_image"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="24dp"
+                android:src="@drawable/ic_place"
+                android:layout_below="@+id/eventPage_time_image"
+                android:layout_alignLeft="@+id/eventPage_time_image"
+                android:layout_alignStart="@+id/eventPage_time_image" />
         </RelativeLayout>
     </ScrollView>
 
